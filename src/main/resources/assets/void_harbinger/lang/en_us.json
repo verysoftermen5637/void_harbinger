@@ -1,0 +1,18 @@
+{
+  "entity.void_harbinger.void_harbinger": "§5§lThe Void Harbinger",
+  "item.void_harbinger.void_scythe": "§dVoid Harbinger's Scythe",
+  "item.void_harbinger.void_scythe.desc_1": "Forged from condensed event horizon matter.",
+  "item.void_harbinger.void_scythe.desc_2": "§7Right-Click: §dVoid Warp §7(blinks 12 blocks forward)",
+  "item.void_harbinger.void_scythe.desc_3": "§6Deals 40 radial damage upon emergence",
+  "item.void_harbinger.heart_of_the_void": "§5Heart of the Void",
+  "item.void_harbinger.heart_of_the_void.desc_1": "A pulsating core of an eternal singularity.",
+  "item.void_harbinger.heart_of_the_void.desc_2": "§bPassive: Resistance & Night Vision",
+  "item.void_harbinger.heart_of_the_void.desc_3": "§ePrevents falling into the End Void",
+  "item.void_harbinger.void_harbinger_spawn_egg": "Void Harbinger Spawn Egg",
+  "subtitles.entity.void_harbinger.ambient": "The Void Harbinger whispers",
+  "subtitles.entity.void_harbinger.roar": "The Void Harbinger roars",
+  "subtitles.entity.void_harbinger.attack": "Scythe cleaves through reality",
+  "subtitles.entity.void_harbinger.teleport": "Dimensional rift snaps",
+  "subtitles.entity.void_harbinger.singularity": "Singularity devours matter",
+  "subtitles.item.void_scythe.warp": "Void Warp blinks forward"
+}

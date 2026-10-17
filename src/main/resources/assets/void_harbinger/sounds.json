@@ -1,0 +1,44 @@
+{
+  "entity.void_harbinger.ambient": {
+    "category": "hostile",
+    "sounds": [
+      "minecraft:mob/wither/idle1",
+      "minecraft:mob/enderdragon/growl1"
+    ]
+  },
+  "entity.void_harbinger.roar": {
+    "category": "hostile",
+    "sounds": [
+      "minecraft:mob/warden/roar",
+      "minecraft:mob/enderdragon/growl2"
+    ]
+  },
+  "entity.void_harbinger.attack": {
+    "category": "hostile",
+    "sounds": [
+      "minecraft:entity/player/attack/sweep",
+      "minecraft:entity/wither/shoot"
+    ]
+  },
+  "entity.void_harbinger.teleport": {
+    "category": "hostile",
+    "sounds": [
+      "minecraft:entity/enderman/teleport",
+      "minecraft:block/portal/travel"
+    ]
+  },
+  "entity.void_harbinger.singularity": {
+    "category": "hostile",
+    "sounds": [
+      "minecraft:block/beacon/power_select",
+      "minecraft:ambient/cave/cave14"
+    ]
+  },
+  "item.void_scythe.warp": {
+    "category": "players",
+    "sounds": [
+      "minecraft:item/chorus_fruit/teleport",
+      "minecraft:entity/warden/sonic_boom"
+    ]
+  }
+}

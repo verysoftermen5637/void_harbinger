@@ -1,0 +1,18 @@
+{
+  "entity.void_harbinger.void_harbinger": "§5§lВестник Пустоты",
+  "item.void_harbinger.void_scythe": "§dКоса Вестника Пустоты",
+  "item.void_harbinger.void_scythe.desc_1": "Оружие, выкованное из материи горизонта событий.",
+  "item.void_harbinger.void_scythe.desc_2": "§7ПКМ: §dСкачок сквозь Пустоту §7(телепортация на 12 блоков)",
+  "item.void_harbinger.void_scythe.desc_3": "§6Наносит 40 ед. кругового урона при выходе из разлома",
+  "item.void_harbinger.heart_of_the_void": "§5Сердце Пустоты",
+  "item.void_harbinger.heart_of_the_void.desc_1": "Пульсирующее ядро вечной сингулярности.",
+  "item.void_harbinger.heart_of_the_void.desc_2": "§bПассивно: Сопротивление урону и Ночное зрение",
+  "item.void_harbinger.heart_of_the_void.desc_3": "§eСпасает от падения в Бездну в измерении Края",
+  "item.void_harbinger.void_harbinger_spawn_egg": "Яйцо призыва Вестника Пустоты",
+  "subtitles.entity.void_harbinger.ambient": "Вестник Пустоты шепчет",
+  "subtitles.entity.void_harbinger.roar": "Вестник Пустоты издает оглушительный рев",
+  "subtitles.entity.void_harbinger.attack": "Коса рассекает пространство",
+  "subtitles.entity.void_harbinger.teleport": "Пространственный разлом хлопает",
+  "subtitles.entity.void_harbinger.singularity": "Сингулярность пожирает материю",
+  "subtitles.item.void_scythe.warp": "Скачок сквозь Пустоту"
+}
