@@ -18,6 +18,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.WitherSkullEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -197,7 +198,7 @@ public class VoidHarbingerEntity extends HostileEntity implements GeoEntity {
 
         boolean damaged = super.damage(source, amount);
 
-        // Reactive teleport
+        // Reactive teleport behind attacker
         if (damaged && this.teleportCooldown <= 0 && source.getAttacker() instanceof LivingEntity attacker) {
             if (this.random.nextFloat() < 0.45f) {
                 teleportBehindAttacker(attacker);
@@ -215,11 +216,11 @@ public class VoidHarbingerEntity extends HostileEntity implements GeoEntity {
         double targetY = attacker.getY() + 0.5;
         double targetZ = attacker.getZ() + lookVec.z;
 
-        if (this.teleport(targetX, targetY, targetZ, true)) {
-            this.getWorld().playSound(null, targetX, targetY, targetZ, ModSounds.HARBINGER_TELEPORT, SoundCategory.HOSTILE, 2.0f, 1.0f);
-            if (this.getWorld() instanceof ServerWorld serverWorld) {
-                serverWorld.spawnParticles(ParticleTypes.REVERSE_PORTAL, targetX, targetY + 1.5, targetZ, 40, 0.5, 1.0, 0.5, 0.1);
-            }
+        // Use safe standard requestTeleport on Entity
+        this.requestTeleport(targetX, targetY, targetZ);
+        this.getWorld().playSound(null, targetX, targetY, targetZ, ModSounds.HARBINGER_TELEPORT, SoundCategory.HOSTILE, 2.0f, 1.0f);
+        if (this.getWorld() instanceof ServerWorld serverWorld) {
+            serverWorld.spawnParticles(ParticleTypes.REVERSE_PORTAL, targetX, targetY + 1.5, targetZ, 40, 0.5, 1.0, 0.5, 0.1);
         }
     }
 
@@ -304,7 +305,7 @@ public class VoidHarbingerEntity extends HostileEntity implements GeoEntity {
         @Override
         public boolean canStart() {
             LivingEntity target = this.boss.getTarget();
-            return target != null && target.isAlive() && this.boss.squaredDistanceTo(target) < 16.0;
+            return target != null && target.isAlive() && this.boss.squaredDistanceTo(target) < 25.0;
         }
 
         @Override
@@ -347,16 +348,18 @@ public class VoidHarbingerEntity extends HostileEntity implements GeoEntity {
         @Override
         public void tick() {
             LivingEntity target = this.boss.getTarget();
-            if (target == null) return;
+            if (target == null || this.boss.getWorld().isClient()) return;
             this.timer++;
             if (this.timer % 6 == 0 && this.timer <= 24) {
-                // Launch void projectile
                 double dx = target.getX() - this.boss.getX();
-                double dy = target.getBodyY(0.5) - this.boss.getBodyY(0.5);
+                double dy = target.getBodyY(0.5) - (this.boss.getY() + 2.5);
                 double dz = target.getZ() - this.boss.getZ();
-                VoidProjectileEntity proj = new VoidProjectileEntity(this.boss.getWorld(), this.boss, dx, dy, dz);
-                proj.setPos(this.boss.getX(), this.boss.getY() + 2.5, this.boss.getZ());
-                this.boss.getWorld().spawnEntity(proj);
+
+                WitherSkullEntity skull = new WitherSkullEntity(this.boss.getWorld(), this.boss, dx, dy, dz);
+                skull.setPos(this.boss.getX(), this.boss.getY() + 2.5, this.boss.getZ());
+                skull.setCharged(true);
+                this.boss.getWorld().spawnEntity(skull);
+
                 this.boss.getWorld().playSound(null, this.boss.getX(), this.boss.getY(), this.boss.getZ(),
                         SoundEvents.ENTITY_WITHER_SHOOT, SoundCategory.HOSTILE, 1.5f, 1.2f);
             }
@@ -396,9 +399,9 @@ public class VoidHarbingerEntity extends HostileEntity implements GeoEntity {
 
         @Override
         public void tick() {
-            if (this.center == null) return;
+            if (this.center == null || this.boss.getWorld().isClient()) return;
             this.timer++;
-            // Pull all players towards singularity center
+            
             List<LivingEntity> victims = this.boss.getWorld().getEntitiesByClass(
                     LivingEntity.class,
                     new Box(this.center.x - 14, this.center.y - 4, this.center.z - 14,
@@ -416,7 +419,6 @@ public class VoidHarbingerEntity extends HostileEntity implements GeoEntity {
                 sw.spawnParticles(ParticleTypes.END_ROD, center.x, center.y + 1, center.z, 10, 0.5, 0.5, 0.5, 0.1);
             }
 
-            // Big Detonation at tick 50
             if (this.timer == 50) {
                 for (LivingEntity victim : victims) {
                     victim.damage(this.boss.getDamageSources().magic(), 22.0f);
